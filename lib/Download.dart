@@ -117,13 +117,6 @@ class _DownloadDataScreenState extends State<DownloadDataScreen> {
         children: [
           ElevatedButton(
             onPressed: () async {
-              try {
-                // Delete the file
-              await deleteAndRefreshList(imageRef);
-                print('File deleted successfully');
-              } catch (e) {
-                print('Error deleting file: $e');
-              }
             },
             child: Text('Delete File'),
           ),
