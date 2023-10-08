@@ -31,6 +31,7 @@ class _DownloadDataScreenState extends State<DownloadDataScreen> {
       // Delete the file
       await imageRef.delete();
       print('File deleted successfully');
+      
 
       // Refresh the list by fetching updated data
       setState(() {

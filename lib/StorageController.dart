@@ -38,7 +38,14 @@ class Upload extends GetxController {
               });
       //if succesfull get url
       imageUrl = await referenceImagetoUpload.getDownloadURL();
-      print('this is the url$imageUrl');
+          Get.snackbar(
+      'Success',
+      'Image uploaded successfully!',
+      snackPosition: SnackPosition.BOTTOM,
+      duration: Duration(seconds: 3),
+    );
+   print('this is the url$imageUrl');
+      
 } else { 
        await referenceImagetoUpload
       .putFile(File(file.path))
@@ -48,10 +55,24 @@ class Upload extends GetxController {
           });
   //if succesfull get url
   imageUrl = await referenceImagetoUpload.getDownloadURL();
+      Get.snackbar(
+      'Success',
+      'Image uploaded successfully!',
+      snackPosition: SnackPosition.BOTTOM,
+      duration: Duration(seconds: 3),
+    );
+
   print('this is the url$imageUrl');
 }
     } catch (e) {
       print(e.toString());
+          Get.snackbar(
+      'failed',
+      '$e',
+      snackPosition: SnackPosition.BOTTOM,
+      duration: Duration(seconds: 3),
+    );
+
     }
   }
 
