@@ -67,63 +67,57 @@ class _DownloadDataScreenState extends State<DownloadDataScreen> {
           } else if (snapshot.hasData) {
             return
             
-             Row(
-              children: [
-                Stack(
-                  children: [
-                    Container(
-                      width: 200,
-                      height: 200,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                      ),
-                      child: Image.network(
-                        snapshot.data!,
-                        width: 400,
+             Center(
+               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        width: 200,
                         height: 200,
-                        fit: BoxFit.cover,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                        ),
+                        child: Image.network(
+                          snapshot.data!,
+                          width: 400,
+                          height: 200,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: IconButton(
-                        color: Colors.amber,
-                        onPressed: () async {
-                          final url = snapshot.data!;
-                          if (kIsWeb) {
-                            window.open(url, '_blank');
-                          } else {
-                            final tempfile = await getTemporaryDirectory();
-                            final path = '${tempfile.path}/${imageRef.name}';
-                            await Dio().download(url, path);
-                            await GallerySaver.saveImage(path, toDcim: true);
-                          }
-                        },
-                        icon: const Icon(Icons.download_outlined),
+                      Positioned(
+                       right: 0,
+                       top: 0,
+                        child: IconButton(
+                          color: Colors.amber,
+                          onPressed: () async {
+                            final url = snapshot.data!;
+                            if (kIsWeb) {
+                              window.open(url, '_blank');
+                            } else {
+                              final tempfile = await getTemporaryDirectory();
+                              final path = '${tempfile.path}/${imageRef.name}';
+                              await Dio().download(url, path);
+                              await GallerySaver.saveImage(path, toDcim: true);
+                            }
+                          },
+                          icon: const Icon(Icons.download_outlined),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            );
+                    ],
+                  ),
+                ],
+                         ),
+             );
        
           } else {
             return const Text('Image not available.');
           }
         },
       ),
-      const Spacer(),
-      Column(
-        children: [
-          ElevatedButton(
-            onPressed: () async {
-            },
-            child: Text('Delete File'),
-          ),
-          Text(imageRef.name),
-        ],
-      ),
-    ],
+      
+ ],
   );
               });
         } else if (snapshot.hasError) {
