@@ -27,7 +27,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return const GetMaterialApp(
        debugShowCheckedModeBanner: false,
       home: home(),
     );
@@ -61,7 +61,7 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Storage'),
+        title: const Text('Storage_Delete'),
         bottom: TabBar(
           controller: _tabController,
           tabs: const [

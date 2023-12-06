@@ -17,7 +17,6 @@ class DownloadDataScreen extends StatefulWidget {
 }
 
 class _DownloadDataScreenState extends State<DownloadDataScreen> {
-  
   late Future<ListResult> imagefiles;
 
   @override
@@ -26,6 +25,7 @@ class _DownloadDataScreenState extends State<DownloadDataScreen> {
     super.initState();
     imagefiles = Upload.instance.referenceDirImage.listAll();
   }
+
   Future<void> deleteAndRefreshList(Reference imageRef) async {
     try {
       // Delete the file
@@ -41,8 +41,6 @@ class _DownloadDataScreenState extends State<DownloadDataScreen> {
     }
   }
 
-   
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,83 +53,92 @@ class _DownloadDataScreenState extends State<DownloadDataScreen> {
               itemBuilder: (context, index) {
                 final imageRef = snapshot.data!.items[index];
 
-                return  Row(
-    children: [
-      FutureBuilder<String>(
-        future: imageRef.getDownloadURL(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else if (snapshot.hasData) {
-            return
-            
-             Row(
-              children: [
-                Stack(
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      width: 200,
-                      height: 200,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                      ),
-                      child: Image.network(
-                        snapshot.data!,
-                        width: 400,
-                        height: 200,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: IconButton(
-                        color: Colors.amber,
-                        onPressed: () async {
-                          final url = snapshot.data!;
-                          if (kIsWeb) {
-                            window.open(url, '_blank');
-                          } else {
-                            final tempfile = await getTemporaryDirectory();
-                            final path = '${tempfile.path}/${imageRef.name}';
-                            await Dio().download(url, path);
-                            await GallerySaver.saveImage(path, toDcim: true);
-                          }
-                        },
-                        icon: const Icon(Icons.download_outlined),
-                      ),
+                    FutureBuilder<String>(
+                      future: imageRef.getDownloadURL(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else if (snapshot.hasData) {
+                          return Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Stack(
+                                  children: [
+                                    Container(
+                                      width: 200,
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.grey),
+                                      ),
+                                      child: Image.network(
+                                        snapshot.data!,
+                                        width: 400,
+                                        height: 200,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    Positioned(
+                                      right: 0,
+                                      top: 0,
+                                      child: IconButton(
+                                        color: Colors.amber,
+                                        onPressed: () async {
+                                          final url = snapshot.data!;
+                                          if (kIsWeb) {
+                                            window.open(url, '_blank');
+                                          } else {
+                                            final tempfile =
+                                                await getTemporaryDirectory();
+                                            final path =
+                                                '${tempfile.path}/${imageRef.name}';
+                                            await Dio().download(url, path);
+                                            await GallerySaver.saveImage(path,
+                                                toDcim: true);
+                                          }
+                                        },
+                                        icon:
+                                            const Icon(Icons.download_outlined),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                            
+                                    Column(
+                                      children: [
+                                        ElevatedButton(
+                                          onPressed: () async {
+                                            try {
+                                              // Delete the file
+                                              await deleteAndRefreshList(imageRef);
+                                              print('File deleted successfully');
+                                            } catch (e) {
+                                              print('Error deleting file: $e');
+                                            }
+                                          },
+                                          child: const Text('Delete File'),
+                                        ),
+                                        Text(imageRef.name),
+                                      ],
+                                    ),
+                                  
+                              
+                               ],
+                            ),
+                          );
+                        } else {
+                          return const Text('Image not available.');
+                        }
+                      },
                     ),
                   ],
-                ),
-              ],
-            );
-       
-          } else {
-            return const Text('Image not available.');
-          }
-        },
-      ),
-      const Spacer(),
-      Column(
-        children: [
-          ElevatedButton(
-            onPressed: () async {
-              try {
-                // Delete the file
-              await deleteAndRefreshList(imageRef);
-                print('File deleted successfully');
-              } catch (e) {
-                print('Error deleting file: $e');
-              }
-            },
-            child: Text('Delete File'),
-          ),
-          Text(imageRef.name),
-        ],
-      ),
-    ],
-  );
+                );
               });
         } else if (snapshot.hasError) {
           return const Center(
@@ -146,7 +153,3 @@ class _DownloadDataScreenState extends State<DownloadDataScreen> {
     ));
   }
 }
-
-
-
-

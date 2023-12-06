@@ -1,12 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-
 import 'dart:io';
-
-import 'package:firebase_storage/firebase_storage.dart';
-
 import 'StorageController.dart';
 
 class PostDataScreen extends StatefulWidget {
@@ -62,12 +58,25 @@ class _PostDataScreenState extends State<PostDataScreen> {
                           ),
                   ),
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
                 ElevatedButton(
                   onPressed: () {
-                    Upload.instance.uploadimage(file);
-                    setState(() {
-                      file == null;
-                    });
+                    if (file == null) {
+                      Get.snackbar(
+                        "Upload halted",
+                        "Please select an image",
+                        backgroundColor: Colors.red,
+                        snackPosition: SnackPosition.TOP,
+                        colorText: Colors.white,
+                      );
+                    } else {
+                      Upload.instance.uploadImage(file);
+                      setState(() {
+                        _imageFile = null; // Use assignment (=) instead of comparison (==)
+                      });
+                    }
                   },
                   child: const Text('Submit'),
                 ),
