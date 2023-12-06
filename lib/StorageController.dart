@@ -34,7 +34,7 @@ class Upload extends GetxController {
     )
           .whenComplete(() => {
                 imageUrl = referenceImagetoUpload.getDownloadURL().toString(),
-                print('this is the url  $imageUrl'),
+              
               });
       //if succesfull get url
       imageUrl = await referenceImagetoUpload.getDownloadURL();
@@ -51,7 +51,7 @@ class Upload extends GetxController {
       .putFile(File(file.path))
       .whenComplete(() => {
             imageUrl = referenceImagetoUpload.getDownloadURL().toString(),
-            print('this is the url$imageUrl'),
+         
           });
   //if succesfull get url
   imageUrl = await referenceImagetoUpload.getDownloadURL();
