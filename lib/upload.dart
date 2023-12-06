@@ -17,8 +17,6 @@ class PostDataScreen extends StatefulWidget {
 }
 
 class _PostDataScreenState extends State<PostDataScreen> {
-
-
   // Function to pick an image using the image_picker package
 
   @override
@@ -32,23 +30,22 @@ class _PostDataScreenState extends State<PostDataScreen> {
             child: Column(
               children: [
                 GestureDetector(
-                  onTap: () {
-                
-                  },
+                  onTap: () {},
                   child: Container(
                     width: 200,
                     height: 200,
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
                     ),
-                    child:const Center(
-                            child: Text('Press to select image'),
-                          ),
+                    child: const Center(
+                      child: Text('Press to select image'),
+                    ),
                   ),
                 ),
+                SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-               
+                 
                   },
                   child: const Text('Submit'),
                 ),

@@ -42,7 +42,7 @@ class home extends StatefulWidget {
 }
 
 class _homeState extends State<home> with SingleTickerProviderStateMixin {
-  final upload = Get.put(Upload());
+  
   late TabController _tabController;
 
   @override
