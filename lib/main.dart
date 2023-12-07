@@ -11,24 +11,26 @@ void main() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
       options: const FirebaseOptions(
-        apiKey: "AIzaSyAmOB_-8DIEIwJEOvrM2a8C6RE-KbvSDDc",
-        projectId: "educative-9",
-        storageBucket: "educative-9.appspot.com",
-        messagingSenderId: "14205101883",
-        appId: "1:14205101883:web:49043452fcfe80de10791e",
+        apiKey: "{{API_Key}}",
+        projectId: "{{projectId}}",
+        storageBucket: "{{storageBucket}}",
+        databaseURL: "{{databaseURL}}",
+        messagingSenderId: "{{messagingSenderId}}",
+        appId: "{{appId}}",
       ),
     );
-    runApp( MyApp());
+    runApp(MyApp());
   } else {
     await Firebase.initializeApp();
-    runApp( MyApp());
+    runApp(MyApp());
   }
 }
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-       debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
       home: home(),
     );
   }
@@ -42,7 +44,6 @@ class home extends StatefulWidget {
 }
 
 class _homeState extends State<home> with SingleTickerProviderStateMixin {
-  
   late TabController _tabController;
 
   @override
@@ -72,10 +73,11 @@ class _homeState extends State<home> with SingleTickerProviderStateMixin {
       ),
       body: TabBarView(
         controller: _tabController,
-        children: const [ PostDataScreen(),DownloadDataScreen(),],
+        children: const [
+          PostDataScreen(),
+          DownloadDataScreen(),
+        ],
       ),
     );
   }
 }
-
-
